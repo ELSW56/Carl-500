@@ -1,0 +1,34 @@
+Quelles améliorations avec la Timeline ?
+
+Déplacement des items d'un groupe à l'autre :
+	Ne pas autoriser le changement de range en même temps
+	Comment faire pour modifier en conséquence le "Drive" associé ?
+	Fait le 07/08/2017
+Agrandissement/rétrécissement des items en fonction des retours constatés :
+	Comment modifier les horaires des différents "Ways" en conséquence ?
+Dédoublement des items lorsque l'on a besoin de plusieurs chauffeurs / véhicules :
+	Comment faire pour ajouter des nouveaux "Drive" en conséquence ?
+	Quelle action mettre en oeuvre pour ce faire ?
+	A la création du run, il serait possible d'indiquer le nombre de chauffeurs/véhicules nécessaires 
+	et de créer les ways associés directement
+Suppression d'un item : l'utiliser pour indiquer que le run/way est terminé ?
+
+
+Avant de mettre cela en oeuvre, serait-il utile d'ajouter aux "Drive" un identifiant incluant le numéro de run ? 
+	Pas nécessaire 07/08/2017
+Un "Drive" devrait-il être systématiquement créé à la création d'un run, même sans chauffeur/véhicule affecté ? 
+	07/08/2017 - Oui, voire plusieurs en fonction du nombre de personnes à transporter et des bagages
+Serait-il intéressant d'avoir une heure de début et de fin pour chaque drive, correspondant initialement au départ
+ et à l'arrivée d'un run, de façon à ensuite pouvoir différencier des drives qui ne partent plus forcément en même 
+ temps ou peuvent être partiellement annulés ?
+	07/08/2017 - Oui, travail en cours. Réalisé : les drive ont des horaires de début et de fin. 
+			Il faut toutefois encore modifier l'horaire du run en conséquence 
+			(on ne touche qu'au départ du premier way et à l'arrivée du dernier ET UNIQUEMENT S'IL N'Y A QU'UN DRIVE ASSOCIE)
+	Pour cela : 
+		- ajout des champs start et end dans la table Drive FAIT
+		- modification de la class Drive en conséquence FAIT
+		- modification de la vue timeline FAIT
+		- MAJ de l'interface de création : on indique juste le nombre de drives à créer
+		- MAJ de l'interface de modification des runs : les chauffeurs et véhicules sont donnés pour informations mais ne peuvent pas être modifiés ici. 
+		  Par contre, le nombre de drives peut être modifié (uniquement en plus, le moins se fait par suppression des drives directement dans la timeline)
+	

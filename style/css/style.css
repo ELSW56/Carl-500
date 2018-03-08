@@ -1,0 +1,242 @@
+@import url("./bootstrap.css");
+@import url("./menu.css");
+
+body
+{
+    background-color: #f6f6f6;
+
+    margin: auto;
+    padding: 0px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10pt;
+}
+
+.navbar
+{
+
+    margin-top: 30px;
+    width: 905px;
+    height: 32px;
+    border-radius: 10px;
+    background-image: url(/carl500/style/images/longbar_middle.png); background-repeat: repeat-x;
+
+}
+
+.navbar img
+{
+    float: left;
+margin-top: -30px;
+width: 100px;
+margin-left: 25px;
+margin-right: 0px;
+
+}
+
+
+
+
+
+#pied_de_page{
+
+    position:relative;
+    bottom:0;
+    
+    height:30px;
+    background: #000000 url(/carl500/style/images/bg_footer.png) repeat-x left top;
+    width: 100%;
+}
+
+
+#container{
+
+        background: white;
+        margin-right: auto;
+        margin-left: auto;
+        width: 95%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        border-radius: 10px;
+        padding: 10px;
+        
+}
+
+	.groupe{
+
+        float: left;
+        width: 33%;
+        text-align: center;
+
+    }
+
+    .compagnie{
+
+        float: left;
+        width: 33%;
+        text-align: center;
+
+    }
+
+    .nb{
+
+        float: left;
+        width: 34%;
+        text-align: center;
+    }
+	.title_trajet{
+
+        border-bottom: 1px solid black;
+        text-align: center;
+    }
+
+	.trajet{
+	
+		clear:both;
+		margin-right: 50px;
+        margin-left: 50px;
+	}
+	.trajet_display{
+	
+		clear:both;
+		margin-right: 0px;
+        margin-left: 0px;
+	}
+	
+    .depart{
+
+        float: left;
+        width: 50%;
+    }
+
+    .arrivee{
+
+        float: left;
+        width: 50%;
+        margin-bottom: 15px;
+    }
+
+    .vehicule{
+
+        float: left;
+        width: 50%;
+   }
+
+    .chauffeur{
+
+        float: left;
+        width: 50%;
+    }
+
+    .separation{
+
+        border-bottom: 3px solid black;
+        padding-bottom: 5px;
+        margin: 5px;
+    }
+
+
+    .calles { 
+
+        background: #9CFFAF;
+ 
+    } 
+   
+   .non_calles {
+
+        background: #FF9C9C;
+   }
+        
+   .termine {
+
+        background: #FFFFFF;
+   }
+
+   .commentaire {
+
+        text-align: center;
+   }
+
+    
+   a{
+        color: black;
+   }
+
+   a:hover {
+
+    text-decoration:none;
+   }
+
+   .affichage_titre {
+
+    width: 33.3%;
+    float: left;
+    text-align: center;
+    margin-bottom: 3px;
+    color: grey;
+   }
+
+   .affichage_titre2 {
+
+    width: 50%;
+    float: left;
+    text-align: center;
+    margin-bottom: 3px;
+    color: grey;
+   	height: 20px;
+}
+
+   .affichage_titre3 {
+
+    width: 25%;
+    float: left;
+    text-align: center;
+    margin-bottom: 3px;
+    color: grey;
+   }
+
+   .affichage_titre4 {
+
+    width: 100%;
+    text-align: left;
+    margin-bottom: 3px;
+    padding-left: 10px;
+    color: grey;
+   }
+
+   .affichage_info {
+
+    width: 33.3%;
+    float: left;
+    text-align: center;
+    font-weight: bold;
+   }
+
+   .affichage_info2 {
+
+    width: 50%;
+    float: left;
+    text-align: center;
+    font-weight: bold;
+	height: 40px;
+   }
+
+   .affichage_info3 {
+
+    width: 25%;
+    float: left;
+    text-align: center;
+    font-weight: bold;
+   }
+
+    .affichage_info4 {
+
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+
+  }
+
+  em {
+
+    color: red;
+  }
+.
