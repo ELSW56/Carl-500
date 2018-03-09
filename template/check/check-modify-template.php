@@ -41,6 +41,7 @@ if($_GET['action']=='modify'){
 			array_push($d_dates, $_POST['departure_date'.$i]);
 			$i++;
 		}
+		$first_date = $_POST['departure_date1'];
 
 		//DATES ARRIVEE
 		$a_dates = array();
@@ -49,6 +50,7 @@ if($_GET['action']=='modify'){
 			array_push($a_dates, $_POST['arrival_date'.$i]);
 			$i++;
 		}
+		$last_date = $_POST['arrival_date'.($i-1)];
 
 		//HEURES DEPART
 		$d_times = array();
@@ -57,6 +59,7 @@ if($_GET['action']=='modify'){
 			array_push($d_times, $_POST['departure_time'.$i]);
 			$i++;
 		}
+		$first_time = $_POST['departure_time1'];
 
 		//HEURES ARRIVEE
 		$a_times = array();
@@ -65,6 +68,7 @@ if($_GET['action']=='modify'){
 			array_push($a_times, $_POST['arrival_time'.$i]);
 			$i++;
 		}
+		$last_time = $_POST['arrival_time'.($i-1)];
 
 		//CONDUCTEURS
 		$drivers = array();
@@ -81,6 +85,12 @@ if($_GET['action']=='modify'){
 			array_push($cars, $_POST['car'.$i]);
 			$i++;
 		}
+		
+		//Nombre de Drives à prévoir
+		if(isset($_POST['nbDrives'])) {$nbDrives = $_POST['nbDrives'];} else 	{$nbDrives = 1;}
+		
+		//Nombre de Drives déjà existants
+		if(isset($_POST['nbDrivesBefore'])) {$nbDrivesBefore = $_POST['nbDrivesBefore'];} else 	{$nbDrivesBefore = 1;}
 
 		if(isset($_POST['finished']) &&  $_POST['finished']== 1){$status = 1;} else{$status = 0;}
 
@@ -93,13 +103,29 @@ if($_GET['action']=='modify'){
 		$verif = verif_variables_run($band, $company, $nb_people);
 
 		if($verif == true){
-
-
+			// Mise à jour des drives existants
 			$all_drives = get_drives_by_id_run($id_run);
-			modif_all_drives($all_drives, $id_run, $cars, $drivers);
+			foreach ($all_drives as $a_drive_id) {
+				$drive = new Drive($a_drive_id);
+				$drive->set_start(create_date($first_date, $first_time));
+				$drive->set_end(create_date($last_date, $last_time));
+				$drive->save();
+			}
+			//modif_all_drives($all_drives, $id_run, $cars, $drivers);
+			// création des drives manquants
+			for ($i=0;$i<$nbDrives - nbDrivesBefore;$i++) {
+				$drive = new Drive();
+				$drive->init($id_run, 0,0, create_date($first_date, $first_time), create_date($last_date, $last_time));
+				$drive->save();
+			}
+			
+			//Mise à jour des trajets
 			$ways_id = get_id_way_by_id_run($id_run);
-			$run = modif_run($id_run, 1, $company, $band, $nb_people, $status, $calle, $comments);
 			modif_way($ways_id, $departures, $arrivals, $d_dates, $d_times, $a_dates, $a_times, $id_run);
+			
+			//Mise à jour du run
+			modif_run($id_run, 1, $company, $band, $nb_people, $status, $calle, $comments);
+
 			header("Location: /carl500/?page=run&action=display&id=".$id_run);
 			exit;
 		}

@@ -427,9 +427,9 @@ function run_calle($id_run){
 *	This function create an object run_car and initialize it
 *	@return the run_car
 */
-function init_drive($id_run, $id_car, $id_driver){
+function init_drive($id_run, $id_car, $id_driver,$start,$end){
 	$drive = new Drive();
-	$drive->init($id_car, $id_run, $id_driver);
+	$drive->init($id_car, $id_run, $id_driver,$start,$end);
 	return $drive;
 }
 
@@ -956,4 +956,8 @@ function update_drive ($item_id, $groupe, $type, $start, $end) {
 	$drive->save();
 }
 
+function delete_a_drive ($id) {
+	$drive = New Drive($id);
+	$drive->delete();
+}
 ?>

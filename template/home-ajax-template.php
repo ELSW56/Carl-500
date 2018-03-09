@@ -23,9 +23,15 @@ if($_GET['action']=='update_drive'){
 		update_drive($_GET['id'],$_GET['group'],$_GET['type'],$_GET['start'],$_GET['end']);
 	}
 }
-// affichage d'un drive
-// A FAIRE : ajouter le nom du chauffeur associé quand on est sur la timeline véhicule
-//			ajouter l'immat et le modèle du véhicule quand on est sur la timeline chauffeur
+
+// Suppression d'un drive
+if($_GET['action']=='delete_drive'){
+	if(!empty($_GET['id'])){
+		delete_a_drive($_GET['id']);
+	}
+}
+
+// Affichage d'un drive
 if($_GET['action']=='display'): ?>
 <button type="button" class="close" data-dismiss="alert">×</button>
 	<div style="float:left; width:800px; font: 10pt arial;">

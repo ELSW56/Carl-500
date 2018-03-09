@@ -12,6 +12,9 @@ class Drive {
 	private $_id_run;
 	private $_id_car;
 	private $_id_driver;
+	private $_start;
+	private $_end;
+	private $_status;
 	private $_pdo;
 	
 	//Constructor-Destructor
@@ -39,17 +42,19 @@ class Drive {
 		$this->_id_driver = $data[3];
 		$this->_start = $data[4];
 		$this->_end = $data[5];
+		$this->_status = $data[6];
 	}
 
 	/**
 	*	This function set all the value of a non set value object
 	*/
-	public function init($id_car, $id_run, $id_driver,$start, $end){
+	public function init($id_run, $id_car, $id_driver,$start, $end){
 		$this->_id_run = $id_run;
 		$this->_id_driver = $id_driver;
 		$this->_id_car = $id_car;
 		$this->_start = $start;
 		$this->_end = $end;
+		$this->_status = 0;
 	}
 	
 	//=========================================================================
@@ -80,6 +85,9 @@ class Drive {
 		return $this->_end;
 	}	
 
+	public function get_status(){
+		return $this->_status;
+	}	
 	public function get_pdo(){
 		return $this->_pdo;
 	}
@@ -112,6 +120,10 @@ class Drive {
 		$this->_end = $end;
 	}
 
+	public function set_status($status){
+		$this->_status = $status;
+	}
+
 	//=========================================================================
 	//OTHERS
 	//=========================================================================
@@ -122,13 +134,14 @@ class Drive {
 			// id du constructeur vide
 			if(empty($id)){
 			
-				$req = $this->_pdo->prepare('INSERT INTO drive ( `id_car`, `id_run`, `id_driver`) VALUES (:idRunCar, :idRun, :idDriver)');
+				$req = $this->_pdo->prepare('INSERT INTO drive ( `id_car`, `id_run`, `id_driver`, `start`, `end`,`status`) VALUES (:idCar, :idRun, :idDriver, :start, :end, :status)');
 				$req->execute(array(
-					'idRunCar' => $this->get_id_car(),
+					'idCar' => $this->get_id_car(),
 					'idRun' => $this->get_id_run(),
 					'idDriver' => $this->get_id_driver(),
 					'start' => $this->get_start(),
-					'end' => $this->get_end()
+					'end' => $this->get_end(),
+					'status' => $this->get_status()
 				));
 			}
 			// $id du constructeur rempli
