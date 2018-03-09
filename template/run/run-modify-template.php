@@ -486,80 +486,47 @@ val_date=" ";
 	<div style="margin-right: 50px;margin-left: 50px;height:30; width:90%;clear:both;text-align:center" id="addTraject" class= "btn"> Ajouter un Trajet </div>
 
 	<div class= "separation" style="width: 98%;" ></div>
+	<div  class="trajet">
 	
  	<?php 	$count_drive=1; 
 			$drives = get_drives_by_id_run($_GET['id']);
-			if ($drives!=null) {
-			foreach($drives as $a_drive) : ?>
+			if ($drives!=null) {?>
+		<div style="width:50%; align:center; float:left">
+					<table style="width: 80%">
+						<tr>
+							<th style="border: 1px solid #dddddd;text-align: left;padding: 8px;">Chauffeur</th>
+							<th style="border: 1px solid #dddddd;text-align: left;padding: 8px;">Véhicule</th>
+						</tr>
+				<?php 	foreach($drives as $a_drive) : ?>
 
-
-	<div  class="trajet">
-			<div class= "chauffeur">
-				<p><label>Chauffeur</label><select class="drivers drives" type="text" name=<?php echo "driver".$count_drive; ?> />
-				<option value=""></option>
-				<?php
-					foreach ($drivers as $row) {
-						if(get_run_driver_by_id($a_drive)==$row['first_name'].' '.$row['last_name']){
-							echo '<option value="'.$row['id'].'" selected>'.$row['first_name'].' '.$row['last_name'].'</option>';
-						}
-						else{
-							echo'<option value="'.$row['id'].'">'.$row['first_name'].' '.$row['last_name'].'</option>';
-						}
-					} 
-				?>
-			</select></p>
-			</div>
-
-			<div class= "vehicule">
-				<p><label>V&eacute;hicule</label><select class="cars drives" type="text" name=<?php echo "car".$count_drive; ?> />
-				<option value=""></option>
-				<?php
-					foreach ($cars as $row) {
-						if(get_run_car_by_id($a_drive)==$row['manufacturer'].' '.$row['model']){
-							echo'<option value="'.$row['id'].'" selected>'.$row['model'].'</option>';
-						}
-						else{
-							echo'<option value="'.$row['id'].'">'.$row['model'].'</option>';
-						}
-					} 
-				?>
-			</select></p>
-			</div>
-			
+						<tr>
+							<td style="border: 1px solid #dddddd;text-align: left;padding: 8px;"><?php echo get_run_driver_by_id($a_drive);?></td>
+							<td style="border: 1px solid #dddddd;text-align: left;padding: 8px;"><?php echo get_run_car_by_id($a_drive);?></td>
+						</tr>			
+			<?php $count_drive++; endforeach; } 
+					else {$count_drive++;}
+					$count_drive--;
+			?>
+		</table>
+		</div>
+		<div style="width:40%; float:left; valign:center">
+		<input name="nbDrivesBefore" type="hidden" value="<?php echo $count_drive ?>">
+		<label>Nombre de véhicules/chauffeurs à prévoir&nbsp;&nbsp;</label>	
+		<select class="drivers drives" type="text" name="nbDrives" />
+	<?php 
+		for ($i = $count_drive; $i < 10; $i++) {
+			echo '		<option value="'.$i.'"';
+			if ($i == $count_drive) {
+				echo ' selected=""';
+			}
+			echo '>'.$i.'</option>';
+		}
+	?>
+		</select>
+		</div>
 	</div>
-
-	<?php $count_drive++; endforeach; }
-		else {?>
-	<div class="trajet">
-			<div class= "chauffeur">
-				<p><label>Chauffeur</label><select class="drivers" type="text" name=<?php echo "driver".$count_drive; ?> />
-				<option value=""></option>
-				<?php
-					foreach ($drivers as $row) {
-							echo'<option value="'.$row['id'].'">'.$row['first_name'].' '.$row['last_name'].'</option>';
-					} 
-				?>
-			</select></p>
-			</div>
-
-			<div class= "vehicule">
-				<p><label>V&eacute;hicule</label><select class="cars" type="text" name=<?php echo "car".$count_drive; ?> />
-				<option value=""></option>
-				<?php
-					foreach ($cars as $row) {
-
-							echo'<option value="'.$row['id'].'">'.$row['manufacturer'].' '.$row['model'].'</option>';
-					} 
-				?>
-			</select></p>
-			</div>
-			
-	</div>
-	<?php } ?>
-	
-	<div style="margin-right: 50px;margin-left: 50px;height:30; width:90%;clear:both;text-align:center" id="addDriver" class ="btn"> Ajouter un Chauffeur / Véhicule </div>
-	
-	<div class= "separation" style="width: 98%;" ></div>
+		
+	<div class= "separation" style="width: 98%; clear:both" ></div>
 
 	<div class="trajet">
 

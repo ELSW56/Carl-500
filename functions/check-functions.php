@@ -264,15 +264,12 @@
 	*	This fonction initialized all the run_car and create them
 	*	@return : the run cars
 	*/
-	function create_all_drives($run, $cars, $drivers){
-		if(count($cars)>count($drivers)){
-			$boucle = $cars;
-		}
-		else{
-			$boucle = $drivers;
-		}
-		for($i=0; $i<count($boucle); $i++){
-			$drives[$i] = init_drive($run, $cars[$i], $drivers[$i]);
+	function create_all_drives($run, $d_date, $d_time, $a_date, $a_time, $nbDrives){
+		$start = create_date($d_date, $d_time);
+		$end = create_date($a_date, $a_time);
+
+		for($i=0; $i<$nbDrives; $i++){
+			$drives[$i] = init_drive($run, 0, 0, $start, $end);
 		}
 		save_drives($drives);
 	}
@@ -412,8 +409,8 @@
 
 
 	/**
-	*	This function modifies the drives corresponding to the ids in parameters and update it whith the new values
-	*	Check if the drive already has an id to recreate it. If it doesn't, the function create a new drive and initialize it.
+	*	This function modifies the drives corresponding to the ids in parameters and updates it with the new values
+	*	Check if the drive already has an id to recreate it. If it doesn't, the function creates a new drive and initializes it.
 	*	@return : the drive
 	*/
 	function modif_all_drives($all_drives, $id_run, $cars, $drivers){

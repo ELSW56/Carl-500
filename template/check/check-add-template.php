@@ -16,7 +16,7 @@ if($_GET['action']=='add'){
 		$company = get_the_id_company_by_name($_POST['company']);
 		$nb_people = $_POST['nb_people'];
 
-		//INITAILISATION OF VARIABLES
+		//INITIALISATION DES VARIABLES
 
 		//LIEUX DEPART
 		$departures = array();
@@ -41,6 +41,8 @@ if($_GET['action']=='add'){
 			array_push($d_dates, $_POST['departure_date'.$i]);
 			$i++;
 		}
+		$first_date = $_POST['departure_date1'];
+		
 
 		//DATES ARRIVEE
 		$a_dates = array();
@@ -49,6 +51,7 @@ if($_GET['action']=='add'){
 			array_push($a_dates, $_POST['arrival_date'.$i]);
 			$i++;
 		}
+		$last_date = $_POST['arrival_date'.($i-1)];
 
 		//HEURES DEPART
 		$d_times = array();
@@ -57,6 +60,7 @@ if($_GET['action']=='add'){
 			array_push($d_times, $_POST['departure_time'.$i]);
 			$i++;
 		}
+		$first_time = $_POST['departure_time1'];
 
 		//HEURES ARRIVEE
 		$a_times = array();
@@ -65,22 +69,11 @@ if($_GET['action']=='add'){
 			array_push($a_times, $_POST['arrival_time'.$i]);
 			$i++;
 		}
+		$last_time = $_POST['arrival_time'.($i-1)];
 
-		//CONDUCTEURS
-		$drivers = array();
-		$i=1;
-		while(isset($_POST['driver'.$i])){
-			array_push($drivers, $_POST['driver'.$i]);
-			$i++;
-		}
+		//Nombre de Drives à créer
+		$nbDrives = $_POST['nbDrives'];
 
-		//VEHICULES
-		$cars = array();
-		$i=1;
-		while(isset($_POST['car'.$i])){
-			array_push($cars, $_POST['car'.$i]);
-			$i++;
-		}
 
 		if(isset($_POST['finished']) &&  $_POST['finished'] == 1){$status = 1;} else{$status = 0;}
 
@@ -100,13 +93,13 @@ if($_GET['action']=='add'){
 			$id_run = $run->get_maximum_id();
 			$id_run --;
 
-			$drives = create_all_drives($id_run, $cars, $drivers);
-
-			//save_drives($drives);
-
 			save_way($departures, $arrivals, $d_dates, $d_times, $a_dates, $a_times, $id_run);
-
-
+			
+			for ($i=0;$i<$nbDrives;$i++) {
+				$drive = new Drive();
+				$drive->init($id_run, 0,0, create_date($first_date, $first_time), create_date($last_date, $last_time));
+				$drive->save();
+			}
 			header("Location: /carl500/?page=run&action=display&id=".$id_run);
 			exit;
 		}
@@ -129,7 +122,7 @@ if($_GET['action']=='add'){
 		$comments = init_comment($_POST['comments']);
 
 
-		//RUN'S CREATION AND VARIABLES' VERIFICATIONS
+		//BAND'S CREATION AND VARIABLES' VERIFICATIONS
 		
 		if(verif_var($_POST['day_passage']) && verif_var($_POST['hour_passage'])){
 			$day_passage = create_date($_POST['day_passage'], $_POST['hour_passage']);

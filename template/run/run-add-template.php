@@ -465,39 +465,26 @@ function get_time_date(date,hour){
 	
 	<div class= "separation" style="width: 98%;" ></div>
 
-	<div class="trajet">
-			<div class= "chauffeur">
-				<p><label>Chauffeur</label><select class="drivers drives" type="text" name="driver1" />
-				<option value=""></option>
-				<?php
-					foreach ($drivers as $row) {
-						echo'<option value="'.$row['id'].'">'.$row['first_name'].' '.$row['last_name'].'</option>';
-					} 
-				?>
-			</select></p>
-			</div>
-
-			<div class= "vehicule">
-				<p><label>Véhicule</label><select class="cars drives" type="text" name="car1" />
-				<option value=""></option>
-				<?php
-					foreach ($cars as $row) {
-						echo'<option value="'.$row['id'].'">'.$row['model'].'</option>';
-					} 
-				?>
-			</select></p>
-			</div>
-			
+	<div class= "trajet">
+		<label>Nombre de véhicules/chauffeurs à prévoir&nbsp;&nbsp;</label>
+		
+		<select type="text" name="nbDrives" />
+		<option value="1" selected>1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		</select>
 	</div>
-
 	
-	<div style="margin-right: 50px;margin-left: 50px;height:30; width:90%;clear:both;text-align:center" id="addDriver" class ="btn"> Ajouter un Chauffeur / Véhicule </div>
-	
-	<div class= "separation" style="width: 98%;" ></div>
 
 	<div class="trajet">
 
-	  	<label>Commentaires</label>
+	  	<label>Commentaires</label><br>
 
 		<center><textarea name="comments" style="width: 98%; margin-top: 5px; max-width: 1175px;"></textarea></center>
 	  		
