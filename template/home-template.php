@@ -186,8 +186,15 @@ $day_filter=$part_date[0];}
 			else {
 				<?php if($vue=='driver'){ echo 'var type=0;'; }
 				if($vue=='car'){ echo 'var type=1;'; }?>
-				var start_ajax = item.start.getFullYear()+'-'+(item.start.getMonth()+1)+'-'+item.start.getDate()+' '+item.start.getHours();
-				var end_ajax = item.end.getFullYear()+'-'+(item.end.getMonth()+1)+'-'+item.end.getDate()+' '+item.end.getHours();
+					function addZero(i) {
+						if (i < 10) {
+							i = "0" + i;
+						}
+					return i;
+				}
+
+				var start_ajax = item.start.getFullYear()+'-'+(item.start.getMonth()+1)+'-'+item.start.getDate()+' '+addZero(item.start.getHours())+':'+addZero(item.start.getMinutes());
+				var end_ajax = item.end.getFullYear()+'-'+(item.end.getMonth()+1)+'-'+item.end.getDate()+' '+addZero(item.end.getHours())+':'+addZero(item.end.getMinutes());
 				
 					$.ajax({
 							type : 'GET',
@@ -199,7 +206,7 @@ $day_filter=$part_date[0];}
 								$('#info_action').show();
 							},
 							success : function(data){ 					
-								$('#info_action').html('<b>Modification : '+item.id+' '+item.group+'!');
+								$('#info_action').html('<b>Modification : '+item.id+' '+item.group+' '+start_ajax+' '+end_ajax+'!');
 								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);							}
 						});
 						
@@ -222,6 +229,7 @@ $day_filter=$part_date[0];}
 						$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
 					}
 				});
+					
 				callback(item);
 			}
 			else {
@@ -239,8 +247,9 @@ $day_filter=$part_date[0];}
 						$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
 					}
 				});
-
+					
 				callback(item);
+				
 			}
 		}
 	};
@@ -274,8 +283,7 @@ $day_filter=$part_date[0];}
 				}
 			});
 
-		}
-		
+		}	
 
 	};
 	var timeline = new vis.Timeline(container);
