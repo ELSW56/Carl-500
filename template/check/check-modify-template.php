@@ -113,7 +113,7 @@ if($_GET['action']=='modify'){
 			}
 			//modif_all_drives($all_drives, $id_run, $cars, $drivers);
 			// création des drives manquants
-			for ($i=0;$i<$nbDrives - nbDrivesBefore;$i++) {
+			for ($i=0;$i<$nbDrives - $nbDrivesBefore;$i++) {
 				$drive = new Drive();
 				$drive->init($id_run, 0,0, create_date($first_date, $first_time), create_date($last_date, $last_time));
 				$drive->save();
