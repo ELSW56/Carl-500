@@ -488,7 +488,7 @@ val_date=" ";
 	<div class= "separation" style="width: 98%;" ></div>
 	<div  class="trajet">
 	
- 	<?php 	$count_drive=1; 
+ 	<?php 	$count_drive=0; 
 			$drives = get_drives_by_id_run($_GET['id']);
 			if ($drives!=null) {?>
 		<div style="width:50%; align:center; float:left">
@@ -510,13 +510,13 @@ val_date=" ";
 		</table>
 		</div>
 		<div style="width:40%; float:left; valign:center">
-		<input name="nbDrivesBefore" type="hidden" value="<?php echo $count_drive ?>">
+		<input name="nbDrivesBefore" type="hidden" value="<?php echo $count_drive+1 ?>">
 		<label>Nombre de véhicules/chauffeurs à prévoir&nbsp;&nbsp;</label>	
 		<select class="drivers drives" type="text" name="nbDrives" />
 	<?php 
-		for ($i = $count_drive; $i < 10; $i++) {
+		for ($i = $count_drive+1; $i < 10; $i++) {
 			echo '		<option value="'.$i.'"';
-			if ($i == $count_drive) {
+			if ($i == $count_drive+1) {
 				echo ' selected=""';
 			}
 			echo '>'.$i.'</option>';
