@@ -207,43 +207,42 @@ $day_filter=$part_date[0];}
 			}
 		},
 		onRemove: function(item, callback) {
-					if (item.className == 'run_grey') {
-						$.ajax({
-							type : 'GET',
-							url : '/carl500/?page=ajax&action=delete&option=no_header_footer' ,
-							data : 'id='+item.id,
-							beforeSend : function() {
-								$('#info_action').html('');
-								$('#info_action').css({opacity:'1'});
-								$('#info_action').show();
-							},
-							success : function(data){ 
-								$('#info_action').html('<b>Suppression :</b> Indisponibilité supprimée avec succès !');
-								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
-							}
-						});
-							
-						callback(item);
+			if (item.className == 'run_grey') {
+				$.ajax({
+					type : 'GET',
+					url : '/carl500/?page=ajax&action=delete&option=no_header_footer' ,
+					data : 'id='+item.id,
+					beforeSend : function() {
+						$('#info_action').html('');
+						$('#info_action').css({opacity:'1'});
+						$('#info_action').show();
+					},
+					success : function(data){ 
+						$('#info_action').html('<b>Suppression :</b> Indisponibilité supprimée avec succès !');
+						$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
 					}
-					else {
-						$.ajax({
-							type : 'GET',
-							url : '/carl500/?page=ajax&action=delete_drive&option=no_header_footer' ,
-							data : 'id='+item.id.split('-')[1].trim(),
-							beforeSend : function() {
-								$('#info_action').html('');
-								$('#info_action').css({opacity:'1'});
-								$('#info_action').show();
-							},
-							success : function(data){ 
-								$('#info_action').html('<b>Suppression :</b> Drive supprimé avec succès !');
-								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
-							}
-						});
-							
-						callback(item);
-						
+				});
+				callback(item);
+			}
+			else {
+				$.ajax({
+					type : 'GET',
+					url : '/carl500/?page=ajax&action=delete_drive&option=no_header_footer' ,
+					data : 'id='+item.id.split('-')[1].trim(),
+					beforeSend : function() {
+						$('#info_action').html('');
+						$('#info_action').css({opacity:'1'});
+						$('#info_action').show();
+					},
+					success : function(data){ 
+						$('#info_action').html('<b>Suppression :</b> Drive supprimé avec succès !');
+						$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
 					}
+				});
+
+				callback(item);
+			}
+		}
 	};
  
  			// Make a callback function for the select event
