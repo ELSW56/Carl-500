@@ -1,7 +1,7 @@
 <?php 
 // ajout d'une indisponibilité
 if($_GET['action']=='add'){
-	if((!empty($_GET['item']))&&(!empty($_GET['type']))&&(!empty($_GET['start']))&&(!empty($_GET['end']))){
+	if((!empty($_GET['item']))&&(!empty($_GET['start']))&&(!empty($_GET['end']))){
 		echo $id=add_indisponibility($_GET['type'],$_GET['item'],$_GET['start'], $_GET['end']);
 		}
 	}
