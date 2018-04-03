@@ -960,4 +960,10 @@ function delete_a_drive ($id) {
 	$drive = New Drive($id);
 	$drive->delete();
 }
+
+function drive_mark_finished ($id) {
+	$drive = New Drive($id);
+	$drive->set_status(1);
+	$drive->save();
+}
 ?>

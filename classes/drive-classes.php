@@ -167,13 +167,14 @@ class Drive {
 							$strreq .="`id_driver`= ".$this->get_id_driver().',';
 						}
 
-						$strreq .= '`start` = :start,`end` = :end,`id_run`  = :idRun WHERE id='.$id;
+						$strreq .= '`start` = :start,`end` = :end,`id_run`  = :idRun,`status` = :status  WHERE id='.$id;
 						$req = $this->_pdo->prepare($strreq);
 				
 						$req->execute(array(
 							'idRun' => $this->get_id_run(),
 							'start' => $this->get_start(),
 							'end' => $this->get_end(),
+							'status' => $this->get_status(),
 							
 						));
 			}

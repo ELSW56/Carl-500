@@ -31,8 +31,16 @@ if($_GET['action']=='delete_drive'){
 	}
 }
 
+
+if ($_GET['action']=='status'){
+	if(!empty($_GET['id'])) {
+		$id_drive = explode("-",$_GET['id'])[1];
+		drive_mark_finished($id_drive);
+	}
+}
+
 // Affichage d'un drive
-if($_GET['action']=='display'): ?>
+if($_GET['action']=='display') : ?>
 <button type="button" class="close" data-dismiss="alert">×</button>
 	<div style="float:left; width:800px; font: 10pt arial;">
 		<div>
@@ -59,6 +67,28 @@ if($_GET['action']=='display'): ?>
 	<div>
         <div  class ="btn child" style =" float:none; margin-top: 5px; margin-bottom: 5px;"> <a class="child" href="/carl500/?page=run&action=display&id=<?php echo $_GET['id_run']; ?>">Afficher en détail</a></div> 
 		<div  class ="btn child" style ="  float:none;"><a class="child" href="/carl500/?page=run&action=modify&id=<?php echo $_GET['id_run']; ?>"> Modifier </a></div> 
+		<div class="btn child mark" id="mark<?php echo $_GET['id_run'].'-'.$_GET['id']; ?>" style="float:none">Marquer comme terminé</div> 
 	</div>
+<script>
+$(document).ready(function(){
+	$('.mark').live('click', function(){
+	var id=$(this).attr('id').replace('mark','');
 
+		$.ajax({
+			type : 'GET',
+			url : '/carl500/?page=ajax&&action=status',
+			data : 'id='+id,
+			beforeSend : function() {
+			},
+			success : function(msg){
+				var item = data.get(id);
+				item.className = 'run_white';
+				data.update(item);
+				$('#info_action').html('<b>Terminé</b>');
+				$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
+			}
+		});
+	});
+});	
+</script>
 <?php endif; ?>

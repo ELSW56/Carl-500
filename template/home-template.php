@@ -148,15 +148,16 @@ $day_filter=$part_date[0];}
 					type : 'GET',
 					url : '/carl500/?page=ajax&action=add&option=no_header_footer' ,
 					data : 'type='+type+'&item='+item.group+'&start='+start_ajax+'&end='+end_ajax ,
+					dataType : "json",
 					beforeSend : function() {
 						$('#info_action').html('');
 						$('#info_action').css({opacity:'1'});
 						$('#info_action').show();
 					},
-					success : function(donnees){ 
-					item.id=donnees;
+					success : function(msg){ 
+					item.id=msg[0];
 					data.add(item);
-					$('#info_action').html('<b>Indisponibilité ajoutée : '+item.id+'</b> Vous pouvez la modifier ou la déplacer');
+					$('#info_action').html('<b>Indisponibilité ajoutée : '+msg[0]+'</b> Vous pouvez la modifier ou la déplacer');
 					$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);
 					}
 				});
@@ -186,15 +187,8 @@ $day_filter=$part_date[0];}
 			else {
 				<?php if($vue=='driver'){ echo 'var type=0;'; }
 				if($vue=='car'){ echo 'var type=1;'; }?>
-					function addZero(i) {
-						if (i < 10) {
-							i = "0" + i;
-						}
-					return i;
-				}
-
-				var start_ajax = item.start.getFullYear()+'-'+(item.start.getMonth()+1)+'-'+item.start.getDate()+' '+addZero(item.start.getHours())+':'+addZero(item.start.getMinutes());
-				var end_ajax = item.end.getFullYear()+'-'+(item.end.getMonth()+1)+'-'+item.end.getDate()+' '+addZero(item.end.getHours())+':'+addZero(item.end.getMinutes());
+				var start_ajax = item.start.getFullYear()+'-'+(item.start.getMonth()+1)+'-'+item.start.getDate()+' '+item.start.getHours();
+				var end_ajax = item.end.getFullYear()+'-'+(item.end.getMonth()+1)+'-'+item.end.getDate()+' '+item.end.getHours();
 				
 					$.ajax({
 							type : 'GET',
@@ -206,7 +200,7 @@ $day_filter=$part_date[0];}
 								$('#info_action').show();
 							},
 							success : function(data){ 					
-								$('#info_action').html('<b>Modification : '+item.id+' '+item.group+' '+start_ajax+' '+end_ajax+'!');
+								$('#info_action').html('<b>Modification : '+item.id+' '+item.group+'!');
 								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);							}
 						});
 						
@@ -214,43 +208,43 @@ $day_filter=$part_date[0];}
 			}
 		},
 		onRemove: function(item, callback) {
-			if (item.className == 'run_grey') {
-				$.ajax({
-					type : 'GET',
-					url : '/carl500/?page=ajax&action=delete&option=no_header_footer' ,
-					data : 'id='+item.id,
-					beforeSend : function() {
-						$('#info_action').html('');
-						$('#info_action').css({opacity:'1'});
-						$('#info_action').show();
-					},
-					success : function(data){ 
-						$('#info_action').html('<b>Suppression :</b> Indisponibilité supprimée avec succès !');
-						$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
+					if (item.className == 'run_grey') {
+						$.ajax({
+							type : 'GET',
+							url : '/carl500/?page=ajax&action=delete&option=no_header_footer' ,
+							data : 'id='+item.id,
+							beforeSend : function() {
+								$('#info_action').html('');
+								$('#info_action').css({opacity:'1'});
+								$('#info_action').show();
+							},
+							success : function(data){ 
+								$('#info_action').html('<b>Suppression :</b> Indisponibilité supprimée avec succès !');
+								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
+							}
+						});
+							
+						callback(item);
 					}
-				});
-					
-				callback(item);
-			}
-			else {
-				$.ajax({
-					type : 'GET',
-					url : '/carl500/?page=ajax&action=delete_drive&option=no_header_footer' ,
-					data : 'id='+item.id.split('-')[1].trim(),
-					beforeSend : function() {
-						$('#info_action').html('');
-						$('#info_action').css({opacity:'1'});
-						$('#info_action').show();
-					},
-					success : function(data){ 
-						$('#info_action').html('<b>Suppression :</b> Drive supprimé avec succès !');
-						$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
+					else {
+						$.ajax({
+							type : 'GET',
+							url : '/carl500/?page=ajax&action=delete_drive&option=no_header_footer' ,
+							data : 'id='+item.id.split('-')[1].trim(),
+							beforeSend : function() {
+								$('#info_action').html('');
+								$('#info_action').css({opacity:'1'});
+								$('#info_action').show();
+							},
+							success : function(data){ 
+								$('#info_action').html('<b>Suppression :</b> Drive supprimé avec succès !');
+								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
+							}
+						});
+							
+						callback(item);
+						
 					}
-				});
-					
-				callback(item);
-				
-			}
 		}
 	};
  
@@ -283,7 +277,8 @@ $day_filter=$part_date[0];}
 				}
 			});
 
-		}	
+		}
+		
 
 	};
 	var timeline = new vis.Timeline(container);
