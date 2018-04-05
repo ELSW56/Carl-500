@@ -351,16 +351,6 @@ function update_drivers_ajax(id_dc){
 	foreach ($locations as $loc) {
 		$optionaddr .= '<option value="'.$loc['id'].'">'.$loc['name'].'</option>';
 	} 
-
-	$optiondriv = "";
-	foreach ($drivers as $driver) {
-		$optiondriv .= '<option value="'.$driver['id'].'">'.$driver['first_name'].' '.$driver['last_name'].'</option>';
-	} 
-
-	$optioncar = "";
-	foreach ($cars as $car) {
-		$optioncar .= '<option value="'.$car['id'].'">'.$car['model'].'</option>';
-	} 
 ?>
 
 <script type="text/javascript">
@@ -538,19 +528,7 @@ val_date=" ";
 
 	<div class= "separation" style="width: 98%;" ></div>
 
-<?php get_checked_run_calle($_GET['id']); ?>
-
-	<div class="trajet" style="display:inline-block">
-		<label class="checkbox">
-		  <input type="checkbox" name="calle" value="1" <?php checked_run_calle($_GET['id']); ?>>
-		  Calé
-		</label>
-
-		<label class="checkbox">
-	 		 <input type="checkbox" name="finished" value="1" <?php run_checked_status($_GET['id']); ?>>
-	  			Terminé
-		</label>
-	</div>
+	<div class="non-printable" style="padding-left: 10px;"> <label><?php run_status($_GET['id']); ?></label> </div>
 
 	<div style= "margin-top: 10px;">
 	

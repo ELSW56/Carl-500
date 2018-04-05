@@ -8,12 +8,12 @@
 /**
  * Get an array of run
  *
- * @param status and calle
+ * @param status and day
  * @return array of run
  */
-function get_runs($day=0,$status=0,$cale=0, $query=0){
+function get_runs($day=0,$status=0, $query=0){
 	$runs=new Run();
-	$result=$runs->get_runs($day, $status, $cale, $query);
+	$result=$runs->get_runs($day, $status, $query);
 
 	return $result;
 }
@@ -86,20 +86,20 @@ function runs_days(){
  * @return css class
  */
 function get_run_class_css($a_run){
-	if($a_run['calle']==1){
-		$class_css='calles';
-	}
-	if($a_run['calle']==0){
-		$class_css='non_calles';
-	}
 	if($a_run['status']==1){
+		$class_css='cale';
+	}
+	if($a_run['status']==0){
+		$class_css='non_cale';
+	}
+	if($a_run['status']==2){
 		$class_css='termine';
 	}
 	return $class_css;
 }
 
 /**
- * Display the name of the class CSS (calle, non_calle, terminee)
+ * Display the name of the class CSS (cale, non_cale, termine)
  *
  * @param $a_run
  * @use get_run_class_css()
@@ -314,9 +314,9 @@ function run_date_dep_by_run_id($id_run){
 /**
 * Return an init run
 */
-function init_run($id_run_type, $company, $band, $nb_people, $status, $calle, $comments){
+function init_run($id_run_type, $company, $band, $nb_people, $status, $comments){
 	$run = new Run();
-	$run->init($id_run_type, $company, $band, $nb_people, $status, $calle, $comments);
+	$run->init($id_run_type, $company, $band, $nb_people, $status, $comments);
 	return $run;
 }
 
@@ -400,26 +400,16 @@ function run_status($id_run){
 	$run=new Run($id_run);
 	$status=$run->get_status();
 
-	if($status==1){
-		echo '<div style="height: 25px; color: green; padding-left: 10px;"> <b>Terminé</b> </div>';
-	}
-	else{
-		echo '<div style="height: 25px; color: red; padding-left: 10px;"> <b>Non terminé</b> </div>';
-	}
-}
-
-/**
-*	echo a new div which give if the run is "callé" or not by giving its id
-*/
-function run_calle($id_run){
-	$run=new Run($id_run);
-	$calle=$run->get_calle();
-
-	if($calle==1){
-		echo '<div style="height: 25px; color: green; padding-left: 10px;"> <b>Calé</b> </div>';
-	}
-	else{
-		echo '<div style="height: 25px; color: red; padding-left: 10px;"> <b>Non Calé</b> </div>';
+	switch ($status) {
+	case 0 :
+		echo '<br><div style="height: 25px; color: red; padding-left: 10px;"> <b>Non calé</b> </div>';
+		break;
+	case 1 :
+		echo '<br><div style="height: 25px; color: green; padding-left: 10px;"> <b>Calé</b> </div>';
+		break;
+	case 2 :
+		echo '<br><div style="height: 25px; width: 100px; background-color: black; color: white; padding-left: 10px;"> <b>Terminé</b> </div>';
+		break;
 	}
 }
 
@@ -513,59 +503,13 @@ function run_car($id_drive){
 
 
 /**
-*	@return if the run is checked by giving its id 
-*/
-function get_checked_run_calle($id_run){
-	$run=new Run($id_run);
-	$calle=$run->get_calle();
-
-	if($calle==1){
-		$ret='checked';
-	}
-	else{
-		$ret=' ';
-	}
-	return $ret;
-}
-
-/**
-*	echo if the run is checked by giving its id 
-*/
-function checked_run_calle($id_run){
-	echo get_checked_run_calle($id_run);
-}
-
-/**
-*	@return if the run is not checked by giving its id 
-*/
-function get_checked_run_non_calle($id_run){
-	$run=new Run($id_run);
-	$calle=$run->get_calle();
-
-	if($calle==1){
-		$ret=' ';
-	}
-	else{
-		$ret='checked';
-	}
-	return $ret;
-}
-
-/**
-*	echo if the run is not checked or not by giving its id 
-*/
-function checked_run_non_calle($id_run){
-	echo get_checked_run_non_calle($id_run);
-}
-
-/**
 *	@return the status of the run by giving its id
 */
-function get_run_checked_status($id_run){
+function get_run_checked_status($id_run, $ref_status){
 	$run=new Run($id_run);
 	$status=$run->get_status();
 
-	if($status==1){
+	if($status==$ref_status){
 		$ret='checked';
 	}
 	else{
@@ -577,8 +521,8 @@ function get_run_checked_status($id_run){
 /**
 *	echo the status of the run by giving its id
 */
-function run_checked_status($id_run){
-	echo get_run_checked_status($id_run);
+function run_checked_status($id_run, $ref_status){
+	echo get_run_checked_status($id_run, $ref_status);
 }
 
 /**
@@ -597,14 +541,12 @@ function get_run_car_id($id_run_car){
 *	Set all attributes with the new values
 *	@return the run
 */
-function modif_the_run($id_run, $id_run_type, $company, $band, $nb_people, $status, $calle, $comments){
+function modif_the_run($id_run, $id_run_type, $company, $band, $nb_people, $comments){
 	$run = new Run($id_run);
 	$run->set_id_run_type($id_run_type);
 	$run->set_id_company($company);
 	$run->set_id_band($band);
 	$run->set_number_persons($nb_people);
-	$run->set_status($status);
-	$run->set_calle($calle);
 	$run->set_comments($comments);
 	return $run;
 }
@@ -674,22 +616,11 @@ function modif_the_drive($id_drive, $id_car, $id_run, $id_driver){
 	return $drive;
 }
 
-function update_run($id,$calle){
+function update_run($id,$status){
 	$run=new Run($id);
-	$run->set_calle($calle);
+	$run->set_status($status);
 	$run->save();
 }
-
-function run_checked_calle($a_run){
-	if($a_run['calle']==1){
-		$class_css='checked="checked"';
-	}
-	if($a_run['calle']==0){
-		$class_css='';
-	}
-	echo $class_css;
-}
-
 
 function get_unavailable_drivers($date1, $date2){
 	$way = new Way();
@@ -940,6 +871,13 @@ function update_drive ($item_id, $groupe, $type, $start, $end) {
 		else {
 			// Il s'agit d'un changement de chauffeur : on n'accepte pas de changement d'horaire simultané
 			$drive->set_id_driver($groupe);
+			// On change le statut du drive si besoin (non_calé <-> calé)
+			if ($drive->get_status() < 2) {
+				if ($drive->get_id_car() > 0 and $groupe > 0) 
+					{$drive->set_status(1);} 
+				else 
+					{$drive->set_status(0);}
+			}
 		}
 	} else {
 		$theCar = $drive->get_id_car();
@@ -951,19 +889,55 @@ function update_drive ($item_id, $groupe, $type, $start, $end) {
 		else {
 			// Il s'agit d'un changement de véhicule : on n'accepte pas de changement d'horaire simultané
 			$drive->set_id_car($groupe);
+			// On change le statut du drive si besoin (non_calé <-> calé)
+			if ($drive->get_status() < 2) {
+				if ($drive->get_id_driver() > 0 and $groupe > 0) 
+					{$drive->set_status(1);} 
+				else 
+					{$drive->set_status(0);}
+			}
 		}
 	}
 	$drive->save();
+	$theRun = New Run($drive->get_id_run());
+	$theRun->updateStatus();
+	return $drive->get_status();
 }
 
 function delete_a_drive ($id) {
 	$drive = New Drive($id);
-	$drive->delete();
+	return $drive->delete();
 }
 
 function drive_mark_finished ($id) {
 	$drive = New Drive($id);
-	$drive->set_status(1);
+	$drive->set_status(2);
+	$theRun = New Run($drive->get_id_run());
+	$theRun->updateStatus();
 	$drive->save();
+}
+function drive_mark_not_finished ($id) {
+	$drive = New Drive($id);
+	if ($drive->get_id_car() > 0 and $drive->get_id_driver()> 0) {
+		$drive->set_status(1);
+		$ret = 'run_green';
+	}
+	else {
+		$drive->set_status(0);
+		$ret = 'run_red';
+	}
+	$theRun = New Run($drive->get_id_run());
+	$theRun->updateStatus();
+	$drive->save();
+	return $ret;
+}
+	
+function displayMode($id,$mode) {
+	$drive = New Drive($id);
+	if (($drive->get_status() == 2 and $mode=='t') or ($drive->get_status() < 2 and $mode!='t')) {
+		echo '; display:none"';
+	} else {
+		echo '';
+	}
 }
 ?>

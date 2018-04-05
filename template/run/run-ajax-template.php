@@ -1,5 +1,5 @@
-<?php if($_GET['type']=='calle'): ?>
-	<?php update_run($_GET['id'],$_GET['calle']); ?>
+<?php if($_GET['type']=='status'): ?>
+	<?php update_run($_GET['id'],$_GET['status']); ?>
 <?php endif; ?>
 
 <?php if($_GET['type']=='display_driver'): ?>

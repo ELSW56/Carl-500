@@ -96,7 +96,8 @@ $day_filter=$part_date[0];}
 						{$sep=1;}
 					$item_id=$a_drive['id'];
 					echo "{id: '".$a_drive['id_run']."-".$item_id."', start: new Date(".$a_drive['depart']."), end: new Date(".$a_drive['arrivee']."), content: '";
-					echo $a_drive['band']."', group: \"".$group."\", editable: true, className: \"run_".$a_drive['statut']."\"}";
+					echo $a_drive['band']."', group: \"".$group."\", editable : true, className: \"run_".$a_drive['statut']."\"}";
+					//echo $a_drive['band']."', group: \"".$group."\", ".$a_drive['editable'].", className: \"run_".$a_drive['statut']."\"}";
 					echo "\n\t";
 				endif;
 			endforeach; 
@@ -194,14 +195,18 @@ $day_filter=$part_date[0];}
 							type : 'GET',
 							url : '/carl500/?page=ajax&action=update_drive&option=no_header_footer' ,
 							data : 'id='+item.id.split('-')[1].trim()+'&group='+item.group+'&type='+type+'&start='+start_ajax+'&end='+end_ajax,
-							beforeSend : function() {
-								$('#info_action').html('');
-								$('#info_action').css({opacity:'1'});
-								$('#info_action').show();
-							},
-							success : function(data){ 					
-								$('#info_action').html('<b>Modification : '+item.id+' '+item.group+'!');
-								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);							}
+							success : function(msg){
+							if (parseInt(msg) == 0) {						
+								item.className = 'run_red';
+							}
+							if (parseInt(msg) == 1) {						
+								item.className = 'run_green';
+							}
+							if (parseInt(msg) == 2) {						
+								item.className = 'run_white';
+							}
+							data.update(item);
+							}						
 						});
 						
 					callback(item);				
@@ -227,18 +232,16 @@ $day_filter=$part_date[0];}
 						callback(item);
 					}
 					else {
+						var oldItem = item
 						$.ajax({
 							type : 'GET',
 							url : '/carl500/?page=ajax&action=delete_drive&option=no_header_footer' ,
 							data : 'id='+item.id.split('-')[1].trim(),
-							beforeSend : function() {
-								$('#info_action').html('');
-								$('#info_action').css({opacity:'1'});
-								$('#info_action').show();
-							},
-							success : function(data){ 
-								$('#info_action').html('<b>Suppression :</b> Drive supprimé avec succès !');
-								$('#info_action').delay(5000).animate({height: 'hide', opacity :'0'}, 520);					
+							success : function(msg){ 
+								if (parseInt(msg) == 1) {
+									alert('Impossible : supprimer le run si besoin !');
+									data.add(oldItem);
+								}
 							}
 						});
 							

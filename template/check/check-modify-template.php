@@ -92,9 +92,7 @@ if($_GET['action']=='modify'){
 		//Nombre de Drives déjà existants
 		if(isset($_POST['nbDrivesBefore'])) {$nbDrivesBefore = $_POST['nbDrivesBefore'];} else 	{$nbDrivesBefore = 1;}
 
-		if(isset($_POST['finished']) &&  $_POST['finished']== 1){$status = 1;} else{$status = 0;}
-
-		if(isset($_POST['calle'])) {$calle = $_POST['calle'];} else 	{$calle = 0;}
+		// Commentaires
 		$comments = init_comment($_POST['comments']);
 
 
@@ -124,7 +122,7 @@ if($_GET['action']=='modify'){
 			modif_way($ways_id, $departures, $arrivals, $d_dates, $d_times, $a_dates, $a_times, $id_run);
 			
 			//Mise à jour du run
-			modif_run($id_run, 1, $company, $band, $nb_people, $status, $calle, $comments);
+			modif_run($id_run, 1, $company, $band, $nb_people, $comments);
 
 			header("Location: /carl500/?page=run&action=display&id=".$id_run);
 			exit;

@@ -188,7 +188,13 @@ class Drive {
 	public function delete(){
 		if(!empty($this->_id)){
 			try{
-				$count = $this->get_pdo()->exec('DELETE FROM drive WHERE id='.$this->_id); 
+				$req='SELECT nb FROM nb_drives_per_run where id_run = '.$this->_id_run;
+				$q = $this->_pdo->query($req);
+				$count = $q->fetch();
+				if ($count['nb'] > 1) {
+					$this->get_pdo()->exec('DELETE FROM drive WHERE id='.$this->_id); 
+				}
+				return $count['nb'];
 			}
 			catch(PDOException $e){
 				echo $e->getMessage();

@@ -251,11 +251,8 @@
 	*	This fonction create a run and save it
 	*	@return : the run
 	*/
-	function save_run($id_run_type, $company, $band, $nb_people, $status, $calle, $comments){
-		$run = init_run($id_run_type, $company, $band, $nb_people, $status, $calle, $comments);
-		if($run->get_status()==1){
-			$run->set_calle(1);
-		}
+	function save_run($id_run_type, $company, $band, $nb_people, $status, $comments){
+		$run = init_run($id_run_type, $company, $band, $nb_people, $status, $comments);
 		$run->save();
 		return $run;
 	}
@@ -398,11 +395,8 @@
 	*	This fonction modify the run corresponding to the id in parameters and update it whith the new values
 	*	@return : the run
 	*/
-	function modif_run($id_run, $id_run_type, $company, $band, $nb_people, $status, $calle, $comments){
-		$run = modif_the_run($id_run, $id_run_type, $company, $band, $nb_people, $status, $calle, $comments);
-		if($run->get_status()==1){
-			$run->set_calle(1);
-		}
+	function modif_run($id_run, $id_run_type, $company, $band, $nb_people, $comments){
+		$run = modif_the_run($id_run, $id_run_type, $company, $band, $nb_people, $comments);
 		$run->save();
 		return $run;
 	}
