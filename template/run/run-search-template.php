@@ -35,7 +35,7 @@
                 <th>Heure d'arrivée</th>
                 <th>Lieu d'arrivée</th>
                 <th>Nombre de personnes</th>
-                <th>Calé</th>
+                <th>Statut</th>
             </tr>
         </thead>
       
@@ -49,7 +49,7 @@
 		} 
 	?>
 
-			<?php foreach(get_runs($a_day,$status,(string)$calles,$_GET['q']) as $a_run) : ?>
+			<?php foreach(get_runs($a_day,$status,$_GET['q']) as $a_run) : ?>
 								
                 <tr class="<?php run_class_css($a_run); ?>">
                      <td class="action child">

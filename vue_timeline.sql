@@ -59,13 +59,17 @@ select 	`d`.`id` AS `id`,
 		`b`.`name` AS `band`,
 		if(isnull(`p`.`id`),-1,`p`.`id`) AS `driver`,
 		if(isnull(`c`.`id`),-1,`c`.`id`) AS `car`,
-		if((`r`.`status` = 1),'white',if((`r`.`calle` = 1),'green','red')) AS `statut` 
-from 	((((`run` `r` left join `drive` `d` on((`r`.`id` = `d`.`id_run`))) 
-		left join `car` `c` on((`d`.`id_car` = `c`.`id`))) 
-		left join `people` `p` on((`d`.`id_driver` = `p`.`id`))) 
-		join `band` `b` on((`r`.`id_band` = `b`.`id`)))
+		if((`d`.`status` = 2),'white',if((`d`.`status` = 1),'green','red')) AS `statut`,
+		if (nb > 1,'editable : true', 'editable : false') as editable
+from 	`run` `r` left join `drive` `d` on (`r`.`id` = `d`.`id_run`)
+		left join `car` `c` on(`d`.`id_car` = `c`.`id`)
+		left join `people` `p` on (`d`.`id_driver` = `p`.`id`)
+		join `band` `b` on (`r`.`id_band` = `b`.`id`)
+		join nb_drives_per_run `n` on (`n`.id_run = `r`.`id`)
 order by r.id, d.id;
 
+create view nb_drives_per_run as 
+SELECT id_run, count( * ) as nb FROM `drive` GROUP BY id_run;
 --
 -- VIEW  `vue_timeline`
 -- Données: Aucune

@@ -126,7 +126,7 @@
 	</div>
 </div>
 
-<div class="non-printable" style="padding-left: 10px;"> <?php run_calle($_GET['id']); ?> <?php run_status($_GET['id']); ?> </div>
+<div class="non-printable" style="padding-left: 10px;"> <?php run_status($_GET['id']); ?> </div>
 
 		<div class ="btn non-printable" style="margin-left: 750px; float:left;">
 

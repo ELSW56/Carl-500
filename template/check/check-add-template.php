@@ -75,9 +75,8 @@ if($_GET['action']=='add'){
 		$nbDrives = $_POST['nbDrives'];
 
 
-		if(isset($_POST['finished']) &&  $_POST['finished'] == 1){$status = 1;} else{$status = 0;}
+		$status = 0;
 
-		$calle = $_POST['calle'];
 		$comments = init_comment($_POST['comments']);
 
 
@@ -88,7 +87,7 @@ if($_GET['action']=='add'){
 
 		if($verif == true){
 
-			$run = save_run(1, $company, $band, $nb_people, $status, $calle, $comments);
+			$run = save_run(1, $company, $band, $nb_people, $status, $comments);
 					
 			$id_run = $run->get_maximum_id();
 			$id_run --;

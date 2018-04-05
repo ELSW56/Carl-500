@@ -39,65 +39,13 @@ $(document).ready(function(){
 });	
 </script>
 
-
-<script>
-$(document).ready(function(){
-	$('.check_calle').live('click', function(){
-	id=$(this).attr('id').replace('check_calle_','');
-	calle=$(this).attr('checked');
-
-	if(calle=='checked'){val_calle=1;}else{val_calle=0;}
-	
-	color_class=$('#container_run_'+id).attr('class');
-
-		$.ajax({
-			type : 'GET',
-			url : '/carl500/?page=run&action=ajax&&type=calle&option=no_header_footer' ,
-			data : 'id='+id+'&&calle='+val_calle ,
-			beforeSend : function() {
-			},
-			success : function(data){ 
-				if(color_class!='termine'){
-					if(val_calle==1){
-						$('#container_run_'+id).removeClass('non_calles').addClass('calles');
-					}
-					if(val_calle==0){
-						$('#container_run_'+id).removeClass('calles').addClass('non_calles');
-					}
-				}
-			}
-		});
-	});
-});	
-</script>
-
     <?php 
       $status=0;
-      $calles=0;
 	  $selected_termine= "";
-	  $selected_tous= "";
-	  $selected_cale = "";
-	  $selected_non_cale = "";	  
 	  if (isset($_GET['filter'])) {
 		  if($_GET['filter']=='termine'){
-			$status=1;
-			$selected_termine='selected="selected"';
-		  }
-		  if($_GET['filter']=='tous'){
-			$selected_tous='selected="selected"';
 			$status=2;
-
-		  }
-		  if($_GET['filter']=='cales'){
-			// on ne garde alors que les non terminés
-			$calles='oui';
-			$status=0;
-			$selected_cale='selected="selected"';
-		  }
-		  if($_GET['filter']=='non_cales'){
-			$calles='non';
-			$selected_non_cale='selected="selected"';
-
+			$selected_termine='selected="selected"';
 		  }
 	  }
    ?>
@@ -122,10 +70,7 @@ $(document).ready(function(){
             <!-- dropdown menu links -->
             
             <option value="/carl500/?page=run<?php if(isset($_GET['date'])){ echo '&date='.$_GET['date']; } ?>" >Runs non terminés</a></option>
-            <option value="/carl500/?page=run&filter=non_cales<?php if(isset($_GET['date'])){ echo '&date='.$_GET['date']; } ?>" <?php echo $selected_non_cale; ?> >Runs non calés</a></option>
-            <option value="/carl500/?page=run&filter=cales<?php if(isset($_GET['date'])){ echo '&date='.$_GET['date']; } ?>" <?php echo $selected_cale; ?> >Runs calés</a></option>
             <option value="/carl500/?page=run&filter=termine<?php if(isset($_GET['date'])){ echo '&date='.$_GET['date']; } ?>" <?php echo $selected_termine; ?> >Runs terminés</a></option>
-            <option value="/carl500/?page=run&filter=tous"<?php if(isset($_GET['date'])){ echo '&date='.$_GET['date']; } ?>" <?php echo $selected_tous; ?> >Tous les Runs</a></option>
           </select>
 
         </div>
@@ -149,7 +94,6 @@ $(document).ready(function(){
                 <th>Date de départ</th>
                 <th colspan=3>Trajet</th>
                 <th>Nombre de personnes</th>
-                <th>Calé</th>
             </tr>
         </thead>
       
@@ -163,7 +107,7 @@ $(document).ready(function(){
 	?>
 
 			<?php 
-			foreach(get_runs($a_day,$status,(string)$calles, 0) as $a_run) : ?>
+			foreach(get_runs($a_day,$status, 0) as $a_run) : ?>
 								
                 <tr id="container_run_<?php echo $a_run[0]; ?>" class="<?php run_class_css($a_run); ?>">
                     <td><?php echo $a_run[0]; ?></td>
@@ -177,11 +121,6 @@ $(document).ready(function(){
                     <td><?php echo $a_run['harr']; ?></td>
                     <td><?php run_destination_timeline($a_run[0]); ?></td>
                     <td><?php echo $a_run['nb']; ?></td>
-                    <td><label class="checkbox">
-                      <input class="check_calle" id="check_calle_<?php echo $a_run['id']; ?>" type="checkbox" name="finished" <?php if($a_run['calle']){echo 'checked="checked"';} ?> value="1" style="margin-left:auto; margin-right:auto;">
-          
-                        </label>
-                    </td>
                 </tr>
 
 			<?php endforeach; ?>

@@ -180,16 +180,6 @@ $(document).ready( function() {
 	foreach ($locations as $row) {
 		$optionaddr .= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 	} 
-
-	$optiondriv = "";
-	foreach ($drivers as $driver) {
-		$optiondriv .= '<option value="'.$driver['id'].'">'.$driver['first_name'].' '.$driver['last_name'].'</option>';
-	} 
-
-	$optioncar = "";
-	foreach ($cars as $car) {
-		$optioncar .= '<option value="'.$car['id'].'">'.$car['model'].'</option>';
-	} 
 ?>
 
 
@@ -284,72 +274,9 @@ function get_time_date(date,hour){
 		return verif;
 	}
 	
-	
-	function update_drivers_cars(){
-		var the_update_element = $('.update') ;
-		var nb_ways=the_update_element.size()/4;
-
-		var min_date='30/12/9999';
-		var max_date='00/00/0000';
-		var min_hour='23:59';
-		var max_hour='00:00';
+	</script>
 
 
-		var min_date=$("input[name=departure_date1]").val();
-		var max_date=$("input[name=arrival_date"+nb_ways+"]").val();
-		var min_hour=$("input[name=departure_time1]").val();
-		var max_hour=$("input[name=arrival_time"+nb_ways+"]").val();
-
-
-			$.ajax({
-		  		type : 'GET',
-				url : '/carl500/?page=run&action=ajax&type=display_driver&option=no_header_footer' ,
-				data : 'min_date='+min_date+'&max_date='+max_date+'&min_hour='+min_hour+'&max_hour='+max_hour,
-				beforeSend : function() {					
-					$(".loader_drivers").remove();
-					$(".valid_drivers").remove();
-					$(".drivers").after('<img class="loader_drivers" src="/carl500/style/images/loading.gif" style="margin-top: 5px;position: absolute;width: 21px;margin-left: 4px;"/>');
-				},
-				success : function(data){ 
-					$('.drivers').html(data);  
-					$(".loader_drivers").remove();
-					$(".drivers").after('<img class="valid_drivers" src="/carl500/style/images/validate.png" style="margin-top: 5px;position: absolute;width: 21px;margin-left: 4px;"/>');
-
-				}
-			});
-
-			$.ajax({
-		  		type : 'GET',
-				url : '/carl500/?page=run&action=ajax&type=display_car&option=no_header_footer' ,
-				data : 'min_date='+min_date+'&max_date='+max_date+'&min_hour='+min_hour+'&max_hour='+max_hour,
-				beforeSend : function() {
-					$(".loader_cars").remove();
-					$(".valid_cars").remove();
-					$(".cars").after('<img class="loader_cars" src="/carl500/style/images/loading.gif" style="margin-top: 5px;position: absolute;width: 21px;margin-left: 4px;"/>');				},
-				success : function(data){ 
-					$('.cars').html(data);
-					$(".loader_cars").remove();
-					$(".cars").after('<img class="valid_cars" src="/carl500/style/images/validate.png" style="margin-top: 5px;position: absolute;width: 21px;margin-left: 4px;"/>');
-				}
-			});
-}
-</script>
-
-
-<!-- A ETE MODIFIE -->
-<script type="text/javascript">
-		$(document).ready( function() {
-		var driver = 2;
-		$('#addDriver').live("click",
-    		function() {
-    			$('#addDriver').before('<div class="trajet"><div class="chauffeur"><p><label>Chauffeur</label><select class="drivers" type="text" name="driver'+driver+'"><option value=""></option><?php echo $optiondriv; ?></select></p></div><div class="vehicule"><p><label>Véhicule</label><select class="cars" type="text" name="car'+driver+'"><option value=""></option><?php echo $optioncar; ?></select></p></div></div>');
-				driver++;
-				//update_drivers_cars();
-      		}
-    	);
-    });
-
- </script>
 <style>
 .error{border-color: red !important;}
 .valid{border-color: green !important;}
@@ -492,19 +419,6 @@ function get_time_date(date,hour){
 
 	<div class= "separation" style="width: 98%;" ></div>
 
-	<div class="trajet" style="display:inline-block">
-		<label class="checkbox">
-			<input type="checkbox" name="calle" value="1">
-			Calé
-		</label>
-
-		
-		<label class="checkbox">
-	 		 <input type="checkbox" name="finished" value="1">
-	  		Terminé
-		</label>
-	</div>
-	
 
 	<div class="trajet"style= "margin-top: 10px;">
 		
@@ -526,7 +440,7 @@ $(function(){
 			minDate: new Date(year, 06, 1),
 			dateFormat: 'dd/mm/yy',
 			showOn:'focus',
-			onSelect: function(value, date) {  update_drivers_cars(); var id=$(this).attr('name').replace('arrival_date','');id++;$("input[name=departure_date"+id+"]").val(value);}
+			onSelect: function(value, date) {  var id=$(this).attr('name').replace('arrival_date','');id++;$("input[name=departure_date"+id+"]").val(value);}
 		}).focus();
 	});
 });
@@ -536,7 +450,7 @@ $(function(){
 		$(this).datepicker({
 			minDate: new Date(year, 06, 1),
 			dateFormat: 'dd/mm/yy', showOn:'focus',
-			onSelect: function(value, date) {  update_drivers_cars(); date_propos(this);}
+			onSelect: function(value, date) {  date_propos(this);}
 		}).focus();
 	});
 });
@@ -544,7 +458,7 @@ $(function(){
 $(function(){
 	$('input.begintime').live('click', function() {
 		$( this).timepicker({showOn:'focus',
-			onSelect: function(value, date) {  update_drivers_cars(); date_propos(this);}
+			onSelect: function(value, date) {  date_propos(this);}
 		}).focus();
 	});
 });
@@ -554,7 +468,6 @@ $(function() {
 		minDate: new Date(year, 06, 1),
 		dateFormat: 'dd/mm/yy', 
 		onSelect: function(value, date) { 
-			update_drivers_cars(); 
 			var id=$(this).attr('name').replace('arrival_date','');
 			id++;
 			$("input[name=departure_date"+id+"]").val(value);} 
