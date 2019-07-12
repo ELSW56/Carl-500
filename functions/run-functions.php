@@ -501,30 +501,6 @@ function run_car($id_drive){
 	echo get_run_car_by_id($id_drive);
 }
 
-
-/**
-*	@return the status of the run by giving its id
-*/
-function get_run_checked_status($id_run, $ref_status){
-	$run=new Run($id_run);
-	$status=$run->get_status();
-
-	if($status==$ref_status){
-		$ret='checked';
-	}
-	else{
-		$ret='';
-	}
-	return $ret;
-}
-
-/**
-*	echo the status of the run by giving its id
-*/
-function run_checked_status($id_run, $ref_status){
-	echo get_run_checked_status($id_run, $ref_status);
-}
-
 /**
 *	@return all the car's id of the run_car by giving its id
 */

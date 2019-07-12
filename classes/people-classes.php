@@ -276,14 +276,14 @@ class People {
 	}
 
 	public function get_all_id_name_driver($tri){
-		$str_req = 'SELECT id, last_name, first_name FROM people WHERE id_people_type = (SELECT id FROM people_type WHERE UPPER(type)="CHAUFFEUR")';
-		if ($tri==1) {$str_req .= ' ORDER BY last_name, first_name';}
+		$str_req = 'SELECT id, last_name, first_name, period FROM people WHERE id_people_type = (SELECT id FROM people_type WHERE UPPER(type)="CHAUFFEUR")';
+		if ($tri==1) {$str_req .= ' ORDER BY period, first_name, last_name';}
 		$req = $this->_pdo->query($str_req);
 		return $req->fetchAll();
 	}
 	public function get_all_id_name_driver_with_run($tri){
-		$str_req = 'SELECT distinct people.id, last_name, first_name FROM people inner join drive on (people.id=drive.id_driver) WHERE id_people_type = (SELECT id FROM people_type WHERE UPPER(type)="CHAUFFEUR")';
-		if ($tri==1) {$str_req .= ' ORDER BY last_name, first_name';}
+		$str_req = 'SELECT distinct people.id, last_name, first_name, period  FROM people inner join drive on (people.id=drive.id_driver) WHERE id_people_type = (SELECT id FROM people_type WHERE UPPER(type)="CHAUFFEUR")';
+		if ($tri==1) {$str_req .= ' ORDER BY period, first_name, last_name';}
 		$req = $this->_pdo->query($str_req);
 		return $req->fetchAll();
 	}

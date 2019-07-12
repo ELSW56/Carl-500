@@ -56,15 +56,15 @@
         <center>
             <div class="navbar" style="width: 1200px" align= "center">
 
-                <a class="logo_carl500"><img src="/carl500/style/images/carl500.png"/></a> 
+                <a class="logo_carl500"><img src="/<?php echo CARL500_DIR_NAME ?>/style/images/carl500.png"/></a> 
                 <ul id="menu">
-                <li><a class="barlink" href="/carl500/">Accueil</a></li>
+                <li><a class="barlink" href="/<?php echo CARL500_DIR_NAME ?>">Accueil</a></li>
 
         <li>
                 <a class="barlink" href="#">RUN</a>
                 <ul>
-                        <li><a href="/carl500/?page=run&action=add">Ajouter un RUN</a></li>
-                        <li><a href="/carl500/?page=run">Liste des RUN</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=run&action=add">Ajouter un RUN</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=run">Liste des RUN</a></li>
                 </ul>
         </li>
 
@@ -73,33 +73,33 @@
          <li>
                 <a class="barlink" href="#">Véhicules</a>
                 <ul>
-                        <li><a href="/carl500/?page=car&action=add">Ajouter un Véhicule</a></li>
-                        <li><a href="/carl500/?page=car">Liste des Véhicules</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=car&action=add">Ajouter un Véhicule</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=car">Liste des Véhicules</a></li>
                 </ul>
         </li>
 
          <li>
                 <a class="barlink" href="#">Groupes</a>
                 <ul>
-                        <li><a href="/carl500/?page=band&action=add">Ajouter un Groupe</a></li>
-                        <li><a href="/carl500/?page=band">Liste des Groupes</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=band&action=add">Ajouter un Groupe</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=band">Liste des Groupes</a></li>
                 </ul>
         </li>
 
          <li>
                 <a class="barlink" href="#">Personnes</a>
                 <ul>
-                        <li><a href="/carl500/?page=people&action=add">Ajouter une Personne</a></li>
-                        <li><a href="/carl500/?page=people">Liste des Personnes</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=people&action=add">Ajouter une Personne</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=people">Liste des Personnes</a></li>
                 </ul>
         </li>
 
          <li>
                 <a class="barlink" href="#">Lieux</a>
                 <ul>
-                        <li><a href="/carl500/?page=location&action=add">Ajouter un Lieu</a></li>
-                        <li><a href="/carl500/?page=location">Liste des Lieux</a></li>
-                        <li><a href="/carl500/?page=distance">Distance</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=location&action=add">Ajouter un Lieu</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=location">Liste des Lieux</a></li>
+                        <li><a href="/<?php echo CARL500_DIR_NAME ?>?page=distance">Distance</a></li>
                 </ul>
         </li>
         
