@@ -7,15 +7,19 @@
 
 // Define the template path
 if ( !defined( 'CARL500_TEMPLATE_PATH' ) )
-	define( 'CARL500_TEMPLATE_PATH', 'C:/wamp/www/carl500/template/' );
+	define( 'CARL500_TEMPLATE_PATH', 'C:/wamp/www/carl500_dev/template/' );
 
 // Define the fucntion path
 if ( !defined( 'CARL500_FUNCTIONS_PATH' ) )
-	define( 'CARL500_FUNCTIONS_PATH', 'C:/wamp/www/carl500/functions/' );
+	define( 'CARL500_FUNCTIONS_PATH', 'C:/wamp/www/carl500_dev/functions/' );
 
 // Define the template path
 if ( !defined( 'CARL500_CLASSES_PATH' ) )
-	define( 'CARL500_CLASSES_PATH', 'C:/wamp/www/carl500/classes/' );
+	define( 'CARL500_CLASSES_PATH', 'C:/wamp/www/carl500_dev/classes/' );
+
+// Define the directory name
+if ( !defined('CARL500_DIR_NAME'))
+	define ('CARL500_DIR_NAME','carl500_dev/');
 
 
 /** FUNCTIONS LOADER *******************************************************************/

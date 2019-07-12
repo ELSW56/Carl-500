@@ -20,7 +20,7 @@
 			$selected_driver='selected="selected"';
 		}
 	}	 
-	$drivers = get_all_id_name_driver_with_run(1);
+	$drivers = get_all_id_name_driver(1);
 	$cars = get_all_id_name_car(1);
 
 
@@ -43,6 +43,18 @@ $day_filter=$part_date[0];}
         color: #4D4D4D;
         font: 8pt arial;
       }
+	  .timelineGroup.jour1{
+		background-color: floralwhite;
+	  }
+	  .timelineGroup.jour2{
+		background-color: #ffeecc;
+	  }
+	  .timelineGroup.nuit1{
+		background-color: #ccffff;
+	  }
+	  .timelineGroup.nuit2{
+		background-color: azure;
+	  }
     </style>
 
 <div id="info_action" class="alert alert-success" style="display:none; height:40px;" ></div>
@@ -60,13 +72,23 @@ $day_filter=$part_date[0];}
 	//Définition des groupes (chauffeurs ou véhicules) pour la timeline
 	var groups = new vis.DataSet([
 	<?php
-		$id=1;
+		$id=1; 
+		$pair = 1;
 		if ($vue == 'driver') {
 			echo "{id: -1, content: \"<span style='color:red;'>Sans chauffeur</span>\", order: 'A'}\n\t";
 			foreach($drivers as $chauffeur) :
-				echo ",{id: '".$chauffeur['id']."', content : '".$chauffeur['first_name']." ".$chauffeur['last_name']."', order: '".$chauffeur['first_name']." ".$chauffeur['last_name']."'}";
+				echo ",{id: '".$chauffeur['id']."', content : \"";
+				echo $chauffeur['first_name']." ".$chauffeur['last_name']."\", order: '".$chauffeur['period'].$chauffeur['first_name'].$chauffeur['last_name']."'";
+				if ($chauffeur['period'] == 'J') {
+					echo ", className : 'timelineGroup jour".$pair."'}";
+				}else if ($chauffeur['period'] == 'N') {
+					echo ", className : 'timelineGroup nuit".$pair."'}";
+				}else  {
+					echo "}";
+				}
 				echo "\n\t";
 				$id++;
+				if ($pair==1){$pair=2;}else{$pair=1;}
 			endforeach;
 		} else {
 			echo "{id: -1, content: \"<span style='color:red;'>Sans véhicule</span>\", order: '0'}\n\t";
@@ -126,6 +148,7 @@ $day_filter=$part_date[0];}
 		min: new Date(<?php start_timeline() ?>),                 
 		max: new Date(<?php end_timeline() ?>), 
 		width:  "100%",
+		verticalScroll: true, 
 		orientation: 'both',
 		showMajorLabels: true,
 		stack: false,

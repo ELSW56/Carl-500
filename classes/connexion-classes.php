@@ -19,7 +19,7 @@
 		
 		public function get_pdo(){
 			try{
-				$obj_pdo=$this->pdo = new PDO('mysql:host=localhost;dbname=carl500_new_v1', 'root', '');
+				$obj_pdo=$this->pdo = new PDO('mysql:host=localhost;dbname=dev_carl500', 'root', '');
 				$obj_pdo->setattribute(PDO::ATTR_PERSISTENT, true);
 				$obj_pdo->setAttribute(PDO::ATTR_TIMEOUT, 300);
 				$obj_pdo->exec("SET CHARACTER SET utf8");
